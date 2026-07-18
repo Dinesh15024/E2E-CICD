@@ -19,7 +19,7 @@ DB_PATH = os.getenv("DB_PATH", "votes.db")
 
 TEAMS = [
     "Mumbai Indians",
-    "Chennai Super Kings",
+    "Chennai Super Kings - CSK - Thala for a reason #7",
     "Royal Challengers Bengaluru",
     "Kolkata Knight Riders",
     "Delhi Capitals",
