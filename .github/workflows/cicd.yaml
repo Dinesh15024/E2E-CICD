@@ -1,0 +1,152 @@
+name: CI-CD Pipeline
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # test:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v5
+  #       with:
+  #         python-version: "3.12"
+
+  #     - name: Install dependencies
+  #       run: pip install -r app/requirements.txt
+
+  #     - name: Run linting
+  #       run: |
+  #         pip install ruff
+  #         ruff check app/ --line-length=120 --exclude=app/tests
+
+  #     - name: Run tests
+  #       run: |
+  #         pip install pytest pytest-cov
+  #         pytest app/tests/ -v --cov=app --cov-report=term-missing
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app
+          push: true
+          tags: |
+            dinesh150/ipl-voter:latest
+            dinesh150/ipl-voter:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # security:
+  #   runs-on: ubuntu-latest
+  #   needs: build-and-push
+
+  #   steps:
+  #     - name: Run Trivy vulnerability scan
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         image-ref: dinesh150/ipl-voter:${{ github.sha }}
+  #         format: table
+  #         exit-code: 0
+  #         severity: CRITICAL,HIGH
+
+  helm-validate:
+    runs-on: ubuntu-latest
+    needs: security
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.19.0
+
+      - name: Helm lint
+        run: helm lint k8/helm/ipl-voter/
+
+      - name: Helm template validation
+        run: helm template ipl-voter k8/helm/ipl-voter/ > /dev/null
+
+  update-image-tag:
+    runs-on: ubuntu-latest
+    needs: helm-validate
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update image tag in values.yaml
+        run: |
+          sed -i "s|tag: \".*\"|tag: \"${{ github.sha }}\"|g" k8/helm/ipl-voter/values.yaml
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "dinesh10"
+          git config --global user.email "drs15024@gmail.com"
+          git add k8/helm/ipl-voter/values.yaml
+          git commit -m "chore(cd): update image tag to ${{ github.sha }}"
+          git push origin HEAD:${{ github.ref }}
+
+  # notify:
+  #   runs-on: ubuntu-latest
+  #   needs: [test, build-and-push, security, helm-validate, update-image-tag]
+  #   if: always() && github.ref == 'refs/heads/main'
+
+  #   steps:
+  #     - name: Send email notification
+  #       uses: dawidd6/action-send-mail@v3
+  #       with:
+  #         server_address: smtp.gmail.com
+  #         server_port: 465
+  #         username: ${{ secrets.EMAIL_USERNAME }}
+  #         password: ${{ secrets.EMAIL_PASSWORD }}
+  #         to: ${{ secrets.EMAIL_USERNAME }}
+  #         from: GitHub Actions <${{ secrets.EMAIL_USERNAME }}>
+  #         subject: |
+  #           ${{ contains(needs.*.result, 'failure') && '❌ FAILED' || '✅ SUCCESS' }} — IPL Voter Pipeline #${{ github.run_number }}
+  #         body: |
+  #           Pipeline: ${{ contains(needs.*.result, 'failure') && 'FAILED ❌' || 'PASSED ✅' }}
+
+  #           Commit:   ${{ github.sha }}
+  #           Branch:   ${{ github.ref_name }}
+  #           Author:   ${{ github.actor }}
+  #           Message:  ${{ github.event.head_commit.message }}
+
+  #           Job Results:
+  #           ├── test:              ${{ needs.test.result }}
+  #           ├── build-and-push:    ${{ needs.build-and-push.result }}
+  #           ├── security:          ${{ needs.security.result }}
+  #           ├── helm-validate:     ${{ needs.helm-validate.result }}
+  #           └── update-image-tag:  ${{ needs.update-image-tag.result }}
+
+  #           View Run:
+  #           https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
