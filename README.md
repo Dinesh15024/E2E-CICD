@@ -142,9 +142,7 @@ Full-Stack-Devops-Project/
 
 **App UI — IPL Team Voter**
 
-<img width="677" height="371" alt="newui" src="<img width="1502" height="777" alt="image" src="https://github.com/user-attachments/assets/1a89f751-f5ef-46d9-9518-d61ba5ac57f0" />
-" />
-
+<img width="1502" height="777" alt="image" src="https://github.com/user-attachments/assets/1a89f751-f5ef-46d9-9518-d61ba5ac57f0" />
 
 ---
 
@@ -157,8 +155,7 @@ Full-Stack-Devops-Project/
 
 **Docker Hub — Image Tags**
 
-<img width="709" height="303" alt="docker_image" src="<img width="957" height="815" alt="image" src="https://github.com/user-attachments/assets/f7b4a951-b110-485a-a899-bc454835aff1" />
-" />
+<img width="957" height="815" alt="image" src="https://github.com/user-attachments/assets/f7b4a951-b110-485a-a899-bc454835aff1" />
 
 ---
 
@@ -170,8 +167,7 @@ Full-Stack-Devops-Project/
 
 **CI Pipeline — GitHub Actions**
 
-<img width="958" height="359" alt="ci_pipeline" src="<img width="1801" height="465" alt="image" src="https://github.com/user-attachments/assets/695a8935-f4d9-4df0-92bd-8cac118ed938" />
-" />
+<img width="1801" height="465" alt="image" src="https://github.com/user-attachments/assets/695a8935-f4d9-4df0-92bd-8cac118ed938" />
 
 ---
 
@@ -185,13 +181,11 @@ Full-Stack-Devops-Project/
 
 **Helm Install**
 
-<img width="563" height="147" alt="helm" src="<img width="887" height="231" alt="image" src="https://github.com/user-attachments/assets/73ad48ee-97c0-4336-b356-adb7196aa177" />
-" />
+<img width="887" height="231" alt="image" src="https://github.com/user-attachments/assets/73ad48ee-97c0-4336-b356-adb7196aa177" />
 
 **Kubernetes Pods Running**
 
-<img width="665" height="302" alt="k8final" src="<img width="972" height="196" alt="image" src="https://github.com/user-attachments/assets/3c3d91b8-3635-406d-be3a-483d6e906e76" />
-" />
+<img width="972" height="196" alt="image" src="https://github.com/user-attachments/assets/3c3d91b8-3635-406d-be3a-483d6e906e76" />
 
 ---
 
@@ -205,8 +199,7 @@ Full-Stack-Devops-Project/
 
 **ArgoCD — Synced to HEAD**
 
-<img width="959" height="453" alt="argocdui" src="<img width="1887" height="708" alt="image" src="https://github.com/user-attachments/assets/9cb95de2-e5a7-4734-998f-53f5b9a7cc0c" />
-" />
+<img width="1887" height="708" alt="image" src="https://github.com/user-attachments/assets/9cb95de2-e5a7-4734-998f-53f5b9a7cc0c" />
 
 ---
 
@@ -221,9 +214,9 @@ Full-Stack-Devops-Project/
 - 
 **CI/CD Pipeline — All Jobs Passing**
   
-<img width="956" height="319" alt="cicd" src="<img width="1801" height="465" alt="image" src="https://github.com/user-attachments/assets/a1c94c18-a888-4934-9b69-c7935004b401" />
-" />
+<img width="1801" height="465" alt="image" src="https://github.com/user-attachments/assets/a1c94c18-a888-4934-9b69-c7935004b401" />
 
+---
 
 ### ✅ Phase 7 — Monitoring + Alerting (Complete)
 
