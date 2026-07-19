@@ -1,6 +1,6 @@
 image:
   repository: dinesh150/ipl-voter
-  tag: "f23c262c77245779abc33a601cfd2b7a561c95c7"
+  tag: "4973f95b3a3ca37f1f22bf2abecf2ad6ea770b3a"
 
 replicaCount: 1
 
