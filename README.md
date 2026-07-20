@@ -151,7 +151,7 @@ Full-Stack-Devops-Project/
 - Multi-stage Dockerfile
 - Non-root user for security
 - Gunicorn production server
-- Image: `omjaju18/ipl-voter:latest`
+- Image: `dinesh150/ipl-voter:latest`
 
 **Docker Hub — Image Tags**
 
